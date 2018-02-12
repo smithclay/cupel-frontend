@@ -5,7 +5,7 @@ import './App.css';
 
 class App extends Component {
   goTo(route) {
-    this.props.history.replace(`/${route}`)
+    this.props.history.replace(`/${route}`);
   }
 
   login() {
@@ -25,23 +25,13 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <button onClick={this.goTo.bind(this, 'home')}>
-          Home
-        </button>
-            {
-              !isAuthenticated() && (
-                  <button onClick={this.login.bind(this)}>
-                    Log In
-                  </button>
-                )
-            }
-            {
-              isAuthenticated() && (
-                  <button onClick={this.logout.bind(this)}>
-                    Log Out
-                  </button>
-                )
-            }
+        <button onClick={this.goTo.bind(this, 'home')}>Home</button>
+        {!isAuthenticated() && (
+          <button onClick={this.login.bind(this)}>Log In</button>
+        )}
+        {isAuthenticated() && (
+          <button onClick={this.logout.bind(this)}>Log Out</button>
+        )}
       </div>
     );
   }
