@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+
 import './App.css';
 
 class App extends Component {
@@ -18,20 +20,24 @@ class App extends Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;
-
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <button onClick={this.goTo.bind(this, 'home')}>Home</button>
-        {!isAuthenticated() && (
-          <button onClick={this.login.bind(this)}>Log In</button>
-        )}
-        {isAuthenticated() && (
-          <button onClick={this.logout.bind(this)}>Log Out</button>
-        )}
+      <div>
+        <Navbar color="faded" light expand="md">
+          <NavbarBrand href="/">
+            <img src={logo} className="App-logo" alt="logo" />cupel
+          </NavbarBrand>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink onClick={this.goTo.bind(this, 'home')}>Home</NavLink>
+            </NavItem>
+            {!isAuthenticated() && (
+              <NavLink onClick={this.login.bind(this)}>Log In</NavLink>
+            )}
+            {isAuthenticated() && (
+              <NavLink onClick={this.logout.bind(this)}>Log Out</NavLink>
+            )}
+          </Nav>
+        </Navbar>
       </div>
     );
   }

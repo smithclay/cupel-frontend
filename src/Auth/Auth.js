@@ -9,16 +9,8 @@ export default class Auth {
     redirectUri: AUTH_CONFIG.callbackUrl,
     audience: AUTH_CONFIG.apiUrl,
     responseType: 'token id_token',
-    scope: 'openid profile read:messages'
+    scope: 'openid profile'
   });
-  /*auth0 = new auth0.WebAuth({
-    domain: 'smithclay.auth0.com',
-    clientID: 'uMTI1mynmMBgKEdSXu9SqlS6uwithwZT',
-    redirectUri: 'http://localhost:3000/callback',
-    audience: 'https://smithclay.auth0.com/userinfo',
-    responseType: 'token id_token',
-    scope: 'openid'
-  });*/
 
   constructor() {
     this.login = this.login.bind(this);
