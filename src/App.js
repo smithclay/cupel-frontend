@@ -24,11 +24,13 @@ class App extends Component {
       <div>
         <Navbar color="faded" light expand="md">
           <NavbarBrand href="/">
-            <img src={logo} className="App-logo" alt="logo" />cupel
+            <img src={logo} className="App-logo" alt="logo" />&nbsp;cupel
           </NavbarBrand>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink onClick={this.goTo.bind(this, 'home')}>Home</NavLink>
+              <NavLink onClick={this.goTo.bind(this, 'networks')}>
+                Networks
+              </NavLink>
             </NavItem>
             {!isAuthenticated() && (
               <NavLink onClick={this.login.bind(this)}>Log In</NavLink>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Router } from 'react-router-dom';
 import App from './App';
-import Home from './Home/Home';
+import Networks from './Networks/Networks';
 import Callback from './Callback/Callback';
 import Profile from './Profile/Profile';
 import Auth from './Auth/Auth';
@@ -20,12 +20,15 @@ export const makeMainRoutes = () => {
     <Router history={history} component={App}>
       <div>
         <Route path="/" render={props => <App auth={auth} {...props} />} />
-        <Route path="/home" render={props => <Home auth={auth} {...props} />} />
+        <Route
+          path="/networks"
+          render={props => <Networks auth={auth} {...props} />}
+        />
         <Route
           path="/profile"
           render={props =>
             !auth.isAuthenticated() ? (
-              <Redirect to="/home" />
+              <Redirect to="/" />
             ) : (
               <Profile auth={auth} {...props} />
             )
