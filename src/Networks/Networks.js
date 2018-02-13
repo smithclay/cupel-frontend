@@ -3,12 +3,10 @@ import request from 'superagent';
 import { Table } from 'reactstrap';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
+import Moment from 'react-moment';
 
 class Networks extends Component {
   state = { fetching: true, networks: null };
-  /*componentWillMount() {
-    this.setState();
-  }*/
 
   componentDidMount() {
     this.fetchNetworks();
@@ -72,8 +70,10 @@ class Networks extends Component {
     var networks = this.state.networks.map(n => {
       return (
         <tr key={n.network_id}>
-          <td>{n.network_id}</td>
-          <td>{n.created_on}</td>
+          <td>{n.friendly_name}</td>
+          <td>
+            <Moment>{n.created_on}</Moment>
+          </td>
           <td>
             <ButtonGroup size="sm">
               <Button outline color="info">

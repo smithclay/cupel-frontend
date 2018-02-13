@@ -1,6 +1,11 @@
 import React from 'react';
 import { Redirect, Route, Router } from 'react-router-dom';
+import { Container } from 'reactstrap';
+
 import App from './App';
+import Header from './Header';
+import Footer from './Footer';
+
 import Networks from './Networks/Networks';
 import Callback from './Callback/Callback';
 import Profile from './Profile/Profile';
@@ -18,8 +23,13 @@ const handleAuthentication = (nextState, replace) => {
 export const makeMainRoutes = () => {
   return (
     <Router history={history} component={App}>
-      <div>
-        <Route path="/" render={props => <App auth={auth} {...props} />} />
+      <Container>
+        <Route path="/" render={props => <Header auth={auth} {...props} />} />
+        <Route
+          exact
+          path="/"
+          render={props => <App auth={auth} {...props} />}
+        />
         <Route
           path="/networks"
           render={props => <Networks auth={auth} {...props} />}
@@ -41,7 +51,8 @@ export const makeMainRoutes = () => {
             return <Callback {...props} />;
           }}
         />
-      </div>
+        <Footer />
+      </Container>
     </Router>
   );
 };
