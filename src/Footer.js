@@ -11,7 +11,7 @@ class Footer extends Component {
   render() {
     return (
       <Container className="Footer text-center">
-        <span>&copy; 2018. Made in Noe Valley, San Francisco.</span>
+        <span>&copy; 2018. Created in 94110.</span>
       </Container>
     );
   }

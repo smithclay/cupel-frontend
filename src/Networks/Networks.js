@@ -9,7 +9,11 @@ class Networks extends Component {
   state = { fetching: true, networks: null };
 
   componentDidMount() {
-    this.fetchNetworks();
+    if (this.props.auth.isAuthenticated()) {
+      this.fetchNetworks();
+    } else {
+      this.setState({ fetching: false });
+    }
   }
 
   fetchNetworks() {
@@ -42,8 +46,13 @@ class Networks extends Component {
       .delete(`https://api.cupel.io/networks/${networkId}`)
       .set('Authorization', `Bearer ${this.props.auth.getIdToken()}`)
       .then(res => {
-        console.log('deleted network', res.body);
-        //this.fetchNetworks();
+        var deletedId = res.body.network_id;
+        var nets = this.state.networks.slice(0);
+        var foundIndex = nets.findIndex(n => {
+          return n.network_id === deletedId;
+        });
+        nets.splice(foundIndex, 1);
+        this.setState({ networks: nets });
       })
       .catch(e => {
         this.setState({ fetching: false, error: e });
@@ -58,15 +67,19 @@ class Networks extends Component {
     return <Container>Loading...</Container>;
   }
 
-  renderError() {
-    return <Container>Error!</Container>;
+  renderNeedsLogin() {
+    return <Container>Hey, you're logged out. Log in, yeah?</Container>;
   }
 
-  renderNetworks() {
-    const createButtonStyle = {
-      float: 'right',
-      marginBottom: '10px'
-    };
+  renderError() {
+    return (
+      <Container>
+        Whoops. That was an error. Please try again or refreshing the page.
+      </Container>
+    );
+  }
+
+  renderNetworkRows() {
     var networks = this.state.networks.map(n => {
       return (
         <tr key={n.network_id}>
@@ -94,6 +107,26 @@ class Networks extends Component {
         </tr>
       );
     });
+
+    if (networks.length === 0) {
+      networks = [
+        <tr key="no-network">
+          <td colSpan="3">No networks. Why not create one, eh?</td>
+        </tr>
+      ];
+    }
+
+    return networks;
+  }
+
+  renderNetworks() {
+    const createButtonStyle = {
+      float: 'right',
+      marginBottom: '10px'
+    };
+
+    var networks = this.renderNetworkRows();
+
     return (
       <Container>
         {networks.length >= 0 && (
@@ -116,7 +149,7 @@ class Networks extends Component {
               <Table>
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th>Name</th>
                     <th>Created On</th>
                     <th />
                   </tr>
@@ -135,6 +168,8 @@ class Networks extends Component {
       return this.renderLoading();
     } else if (this.state.networks) {
       return this.renderNetworks();
+    } else if (!this.props.auth.isAuthenticated()) {
+      return this.renderNeedsLogin();
     } else {
       return this.renderError();
     }

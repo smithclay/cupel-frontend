@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Container
-} from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 import './Header.css';
 

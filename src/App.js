@@ -10,7 +10,6 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth;
     return (
       <Container>
         <h3>There's nothing here yet.</h3>
