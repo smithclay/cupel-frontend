@@ -2,6 +2,7 @@
   "name": "cupel-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://s3-us-west-2.amazonaws.com/app.cupel.io",
   "dependencies": {
     "auth0-js": "^9.2.2",
     "bootstrap": "^4.0.0",

@@ -3,8 +3,10 @@ import Terminal from 'terminal-in-react';
 // connect:
 // just make work with this: https://github.com/trufflesuite/truffle-hdwallet-provider
 // will hdwalletprovider work in a browser though...?
-import HDWalletProvider from 'truffle-hdwallet-provider';
-import EthJs from 'ethjs';
+
+// web3-provider-engine/subproviders/filters.js won't work with create-react-app
+//import HDWalletProvider from 'truffle-hdwallet-provider';
+//import EthJs from 'ethjs';
 
 class InteractiveShell extends Component {
   showMsg = () => 'Hello World';
@@ -15,21 +17,21 @@ class InteractiveShell extends Component {
   }
 
   componentDidMount() {
-    var mnemonic = 'opinion destroy betray ...'; // 12 word mnemonic
-    var provider = new HDWalletProvider(
+    //var mnemonic = 'opinion destroy betray ...'; // 12 word mnemonic
+    /*var provider = new HDWalletProvider(
       mnemonic,
       `${this.networkUrl()}?auth=${this.props.auth.getIdToken()}`
-    );
+    );*/
     // prevent polling
-    provider.engine.stop();
-    window.eth = new EthJs(provider);
+    //provider.engine.stop();
+    //window.eth = new EthJs(provider);
     /*eth.getBlockByNumber(0, true, (err, block) => {
       console.log(err, block)
     });*/
   }
 
   runCommand(cmd, print) {
-    print(eval(cmd));
+    //print(eval(cmd));
   }
 
   render() {

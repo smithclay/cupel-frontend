@@ -7,9 +7,12 @@ export default class Auth {
     domain: AUTH_CONFIG.domain,
     clientID: AUTH_CONFIG.clientId,
     redirectUri: AUTH_CONFIG.callbackUrl,
-    audience: AUTH_CONFIG.apiUrl,
+    audience:
+      process.env.NODE_ENV === 'production'
+        ? AUTH_CONFIG.apiUrl
+        : 'http://localhost:3000/callback',
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: 'openid'
   });
 
   constructor() {
