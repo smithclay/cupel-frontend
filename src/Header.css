@@ -3,6 +3,10 @@
   height: 40px;
 }
 
+.Header-brand {
+  font-size: 1.314em;
+}
+
 .Header-navbar {
   margin-bottom: 10px;
 }

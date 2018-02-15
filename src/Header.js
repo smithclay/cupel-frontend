@@ -22,7 +22,7 @@ class Header extends Component {
     const { isAuthenticated } = this.props.auth;
     return (
       <Navbar className="Header-navbar" color="faded" light expand="md">
-        <NavbarBrand href="/">
+        <NavbarBrand className="Header-brand" href="/">
           <img src={logo} className="App-logo" alt="logo" />&nbsp;cupel
         </NavbarBrand>
         <Nav className="ml-auto" navbar>

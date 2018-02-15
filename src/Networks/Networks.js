@@ -4,9 +4,18 @@ import { Table } from 'reactstrap';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import Moment from 'react-moment';
+import InteractiveShell from '../InteractiveShell/InteractiveShell';
+
+// TODO:
+// move API client into index.js (auth) and inject it into
+// all components?
+
+import './Networks.css';
 
 class Networks extends Component {
-  state = { fetching: true, networks: null };
+  componentWillMount() {
+    this.setState({ fetching: true, networks: null });
+  }
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated()) {
@@ -28,12 +37,15 @@ class Networks extends Component {
       });
   }
 
+  connectNetwork(friendlyName) {
+    this.setState({ selectedNetwork: friendlyName });
+  }
+
   createNetwork() {
     return request
       .post('https://api.cupel.io/networks')
       .set('Authorization', `Bearer ${this.props.auth.getIdToken()}`)
       .then(res => {
-        console.log('created network', res.body);
         this.setState({ networks: this.state.networks.concat([res.body]) });
       })
       .catch(e => {
@@ -68,7 +80,11 @@ class Networks extends Component {
   }
 
   renderNeedsLogin() {
-    return <Container>Hey, you're logged out. Log in, yeah?</Container>;
+    return (
+      <Container className="Networks-loggedout">
+        Hey, you're logged out. Log in, yeah?
+      </Container>
+    );
   }
 
   renderError() {
@@ -89,7 +105,11 @@ class Networks extends Component {
           </td>
           <td>
             <ButtonGroup size="sm">
-              <Button outline color="info">
+              <Button
+                outline
+                color="info"
+                onClick={this.connectNetwork.bind(this, n.friendly_name)}
+              >
                 Connect
               </Button>
               <Button outline disabled color="secondary">
@@ -163,9 +183,28 @@ class Networks extends Component {
     );
   }
 
+  handleShellClose() {
+    this.setState({ selectedNetwork: null });
+  }
+
   render() {
+    var shellStyle = { height: '70vh' };
     if (this.state.fetching) {
       return this.renderLoading();
+    } else if (this.state.selectedNetwork) {
+      return (
+        <Container>
+          <Row>
+            <Col style={shellStyle}>
+              <InteractiveShell
+                networkName={this.state.selectedNetwork}
+                handleShellClose={this.handleShellClose.bind(this)}
+                {...this.props}
+              />
+            </Col>
+          </Row>
+        </Container>
+      );
     } else if (this.state.networks) {
       return this.renderNetworks();
     } else if (!this.props.auth.isAuthenticated()) {
